@@ -15,9 +15,7 @@ public class Libro {
     @ManyToOne
     @JoinColumn(name = "autor_id", nullable = false)
     private Autor autor;
-    @ElementCollection(targetClass = Lenguaje.class, fetch = FetchType.EAGER)
-    @Enumerated(EnumType.STRING)
-    private List<Lenguaje> lenguajes;
+    private String lenguajes;
     private Integer downloads;
 
     public Libro(LibroDTO libroDTO) {
@@ -27,9 +25,7 @@ public class Libro {
         } else {
             this.autor = null;
         }
-        this.lenguajes = libroDTO.languages().stream()
-                .map(Lenguaje::fromString)
-                .collect(Collectors.toList());
+        this.lenguajes = libroDTO.languages().get(0);
         this.downloads = libroDTO.downloads();
     }
 
@@ -61,11 +57,11 @@ public class Libro {
         this.autor = autor;
     }
 
-    public List<Lenguaje> getLenguajes() {
+    public String getLenguajes() {
         return lenguajes;
     }
 
-    public void setLenguajes(List<Lenguaje> lenguajes) {
+    public void setLenguajes(String lenguajes) {
         this.lenguajes = lenguajes;
     }
 
@@ -79,19 +75,15 @@ public class Libro {
 
     @Override
     public String toString() {
-        String idiomas = lenguajes.stream()
-                .map(Lenguaje::name)
-                .collect(Collectors.joining(", "));
-
         return String.format("""
             ////////////////////////////////////////////////
             -------------------- LIBRO ---------------------
             ////////////////////////////////////////////////
             Título: %s
             Autor: %s
-            Idiomas: %s
+            Idioma: %s
             Número de descargas: %s
             ////////////////////////////////////////////////""",
-                title, autor.getName(), idiomas, downloads);
+                title, autor.getName(), lenguajes, downloads);
     }
 }

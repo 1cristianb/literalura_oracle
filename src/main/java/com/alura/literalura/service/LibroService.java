@@ -8,6 +8,8 @@ import com.alura.literalura.repository.LibroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LibroService {
     private final ApiService apiService;
@@ -61,5 +63,20 @@ public class LibroService {
         System.out.println("////////////////////////////////////////////////");
         System.out.println(mensaje);
         System.out.println("////////////////////////////////////////////////");
+    }
+
+    public void listarLibrosRegistrados() {
+        libroRepository.findAll().forEach(System.out::println);
+    }
+
+    public void buscarPorLenguaje(String lenguaje) {
+
+        List<Libro> libros = libroRepository.findByLenguajes(lenguaje);
+        if (libros.isEmpty()) {
+            mostrarMensaje("No se encontraron libros en el idioma: " + lenguaje);
+        } else {
+            System.out.println("Libros encontrados en el idioma: " + lenguaje);
+            libros.forEach(System.out::println);
+        }
     }
 }
