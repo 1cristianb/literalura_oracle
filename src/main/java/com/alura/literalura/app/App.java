@@ -1,5 +1,6 @@
 package com.alura.literalura.app;
 
+import com.alura.literalura.service.AutorService;
 import com.alura.literalura.service.LibroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,10 +11,12 @@ import java.util.Scanner;
 @Component
 public class App {
     private final LibroService libroService;
+    private final AutorService autorService;
     private Scanner scanner = new Scanner(System.in);
     @Autowired
-    public App(LibroService libroService) {
+    public App(LibroService libroService,AutorService autorService) {
         this.libroService = libroService;
+        this.autorService=autorService;
     }
     public void mostrarMenu() {
         boolean salir = false;
@@ -43,13 +46,10 @@ public class App {
                         listarLibrosRegistrados();
                         break;
                     case 3:
-                        // listarAutoresRegistrados();
+                        listarAutoresRegistrados();
                         break;
                     case 4:
-                        System.out.print("Ingrese el año: ");
-                        int fecha = scanner.nextInt();
-                        scanner.nextLine();  // Limpiar el salto de línea
-                        // listarAutoresVivosPorFecha(fecha);
+                        listarAutoresVivosPorFecha();
                         break;
                     case 5:
                         listarLibrosPorIdioma();
@@ -67,6 +67,18 @@ public class App {
             }
         }
     }
+
+    private void listarAutoresVivosPorFecha() {
+        System.out.println("Ingrese el año: ");
+        int fecha = scanner.nextInt();
+        scanner.nextLine();
+        autorService.listarAutoresVivosPorFecha(fecha);
+    }
+
+    private void listarAutoresRegistrados() {
+        autorService.listarAutoresRegistrados();
+    }
+
     private void listarLibrosRegistrados() {
         libroService.listarLibrosRegistrados();
     }

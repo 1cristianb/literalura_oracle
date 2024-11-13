@@ -66,11 +66,13 @@ public class Autor {
     @Override
     public String toString() {
         return String.format("""
-        ----- AUTOR -----
+        ////////////////////////////////////////////////
+        -------------------- AUTOR ---------------------
+        ////////////////////////////////////////////////
         Nombre: %s
         Año de nacimiento: %s
         Año de muerte: %s
-        ------------"""
+        ////////////////////////////////////////////////"""
                 , name, birthYear, deathYear);
     }
 }
