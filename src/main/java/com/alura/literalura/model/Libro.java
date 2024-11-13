@@ -12,7 +12,7 @@ public class Libro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "autor_id", nullable = false)
     private Autor autor;
     @ElementCollection(targetClass = Lenguaje.class, fetch = FetchType.EAGER)
@@ -84,14 +84,14 @@ public class Libro {
                 .collect(Collectors.joining(", "));
 
         return String.format("""
-            ////////////////////////////
-            ---------- LIBRO ----------
-            ////////////////////////////
+            ////////////////////////////////////////////////
+            -------------------- LIBRO ---------------------
+            ////////////////////////////////////////////////
             Título: %s
             Autor: %s
             Idiomas: %s
             Número de descargas: %s
-            ////////////////////////////""",
+            ////////////////////////////////////////////////""",
                 title, autor.getName(), idiomas, downloads);
     }
 }

@@ -9,13 +9,13 @@ import java.util.Scanner;
 @Component
 public class App {
     private final LibroService libroService;
+    private Scanner scanner = new Scanner(System.in);
     @Autowired
     public App(LibroService libroService) {
         this.libroService = libroService;
     }
     public void mostrarMenu()
     {
-        Scanner scanner = new Scanner(System.in);
         boolean salir = false;
 
         while (!salir) {
@@ -36,11 +36,8 @@ public class App {
 
             switch (opcion) {
                 case 1:
-                    System.out.print("Ingrese el título del libro: ");
-                    String titulo = scanner.nextLine();
-                    buscarLibroPorTitulo(titulo);
+                    buscarLibroPorTitulo();
                     break;
-
                 case 2:
                     // listarLibrosRegistrados();
                     break;
@@ -73,7 +70,9 @@ public class App {
 
         scanner.close();
     }
-    private void buscarLibroPorTitulo(String titulo) {
+    private void buscarLibroPorTitulo() {
+        System.out.println("Ingrese el título del libro: ");
+        String titulo = scanner.nextLine();
         libroService.buscarLibroPorTitulo(titulo);
     }
 }

@@ -4,18 +4,16 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
 @Entity
 @Table(name = "autor")
 public class Autor {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Integer birthYear;
     private Integer deathYear;
-    @OneToMany(mappedBy = "autor")
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL)
     private List<Libro> books;
 
     public Autor(AutorDTO autorDTO) {
