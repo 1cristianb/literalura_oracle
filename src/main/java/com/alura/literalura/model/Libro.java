@@ -20,10 +20,10 @@ public class Libro {
     private List<Lenguaje> lenguajes;
     private Integer downloads;
 
-    public Libro(LibroDTO libroDTO, Autor autor) {
+    public Libro(LibroDTO libroDTO) {
         this.title = libroDTO.title();
-        if (autor != null ) {
-            this.autor = autor;
+        if (libroDTO.authors() != null && !libroDTO.authors().isEmpty()) {
+            this.autor = new Autor(libroDTO.authors().get(0));
         } else {
             this.autor = null;
         }
@@ -84,12 +84,14 @@ public class Libro {
                 .collect(Collectors.joining(", "));
 
         return String.format("""
-            ----- LIBRO -----
+            ////////////////////////////
+            ---------- LIBRO ----------
+            ////////////////////////////
             Título: %s
             Autor: %s
             Idiomas: %s
             Número de descargas: %s
-            ------------""",
+            ////////////////////////////""",
                 title, autor.getName(), idiomas, downloads);
     }
 }

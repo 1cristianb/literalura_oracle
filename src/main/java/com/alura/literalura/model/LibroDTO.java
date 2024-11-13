@@ -6,7 +6,6 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record LibroDTO(
-        @JsonAlias("id") Integer book_id,
         @JsonAlias("title") String title,
         @JsonAlias("authors") List<AutorDTO> authors,
         @JsonAlias("languages") List<String> languages,
