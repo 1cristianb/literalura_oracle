@@ -8,7 +8,9 @@ import com.alura.literalura.repository.LibroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LibroService {
@@ -75,8 +77,34 @@ public class LibroService {
         if (libros.isEmpty()) {
             mostrarMensaje("No se encontraron libros en el idioma: " + lenguaje);
         } else {
+            System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||");
             System.out.println("Libros encontrados en el idioma: " + lenguaje);
+            System.out.println("Cantidad de libros : " +libros.size());
+            System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||");
             libros.forEach(System.out::println);
         }
+    }
+
+    public void generarEstadisticas() {
+       List<Libro>libros= libroRepository.findAll();
+
+        DoubleSummaryStatistics stats=libros.stream()
+                .mapToDouble(Libro::getDownloads)
+                .summaryStatistics();
+        System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||");
+        System.out.println("|||||||||||Estadisticas de descargas||||||||||||");
+        System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||");
+        System.out.println("Promedio: " + stats.getAverage());
+        System.out.println("Máximo: " + stats.getMax());
+        System.out.println("Mínimo: " + stats.getMin());
+        System.out.println("Total libros: " + stats.getSum());
+    }
+
+    public void top10LibrosMasDescargados() {
+        List<Libro>libros=libroRepository.findAll().stream()
+                .sorted((l1, l2) -> l2.getDownloads().compareTo(l1.getDownloads()))
+                .limit(10)
+                .collect(Collectors.toList());
+        libros.forEach(System.out::println);
     }
 }

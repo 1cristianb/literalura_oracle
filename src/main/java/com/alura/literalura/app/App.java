@@ -29,7 +29,13 @@ public class App {
             System.out.println("2. Listar libros registrados.");
             System.out.println("3. Listar autores registrados.");
             System.out.println("4. Listar autores vivos en un determinado año.");
-            System.out.println("5. Listar libros por idioma.");
+            System.out.println("5. Listar libros y su cantidad por idioma.");
+            System.out.println("------------------------------------------------");
+            System.out.println("6. Estadisticas de libros descargados.");
+            System.out.println("7. Top 10 libros más descargados.");
+            System.out.println("8. Buscar autor por nombre.");
+            System.out.println("9. Ordenar autores por año de nacimiento.");
+            System.out.println("------------------------------------------------");
             System.out.println("0. Salir.");
             System.out.println("------------------------------------------------");
             System.out.println("Elige una opción: ");
@@ -54,6 +60,18 @@ public class App {
                     case 5:
                         listarLibrosPorIdioma();
                         break;
+                    case 6:
+                        generarEstadisticas();
+                        break;
+                    case 7:
+                        top10LibrosMasDescargados();
+                        break;
+                    case 8:
+                        buscarAutorPorNombre();
+                        break;
+                    case 9:
+                        ordenarAutoresPorNacimiento();
+                        break;
                     case 0:
                         salir = true;
                         System.out.println("Saliendo de LiterAlura. ¡Hasta luego!");
@@ -66,6 +84,24 @@ public class App {
                 scanner.nextLine();
             }
         }
+    }
+
+    private void ordenarAutoresPorNacimiento() {
+        autorService.ordenarAutoresPorNacimiento();
+    }
+
+    private void buscarAutorPorNombre() {
+        System.out.println("Ingrese el nombre del autor: ");
+        String nombre = scanner.nextLine();
+        autorService.buscarAutorPorNombre(nombre);
+    }
+
+    private void top10LibrosMasDescargados() {
+        libroService.top10LibrosMasDescargados();
+    }
+
+    private void generarEstadisticas() {
+        libroService.generarEstadisticas();
     }
 
     private void listarAutoresVivosPorFecha() {

@@ -34,4 +34,18 @@ public class AutorService {
         System.out.println("////////////////////////////////////////////////");
     }
 
+    public void buscarAutorPorNombre(String nombre) {
+        List<Autor> autores=autorRepository.findByNameContainingIgnoreCase(nombre);
+        if (autores.isEmpty()) {
+            mostrarMensaje("No se encontraron autores");
+        } else {
+            System.out.println("Autores encontrados:");
+            autores.forEach(System.out::println);
+        }
+    }
+
+    public void ordenarAutoresPorNacimiento() {
+        List<Autor>autores=autorRepository.findAllByOrderByBirthYearAsc();
+        autores.forEach(System.out::println);
+    }
 }
